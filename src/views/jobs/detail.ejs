@@ -1,0 +1,120 @@
+
+<div class="container mx-auto px-4 py-8">
+  <div class="mb-6">
+    <a href="/jobs" class="text-blue-600 hover:text-blue-800 flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+      </svg>
+      Back to Jobs
+    </a>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Main content -->
+    <div class="lg:col-span-2">
+      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="mb-6">
+          <div class="flex items-center mb-2">
+            <h1 class="text-2xl font-bold text-gray-900"><%= job.title %></h1>
+            <% if (job.featured) { %>
+              <span class="ml-3 px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded">Featured</span>
+            <% } %>
+          </div>
+          <div class="text-xl text-gray-700 mb-4"><%= job.company %></div>
+          
+          <div class="flex flex-wrap gap-3 mb-4">
+            <div class="flex items-center text-gray-600">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <%= job.location %>
+            </div>
+            <div class="flex items-center text-gray-600">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <%= job.type %>
+            </div>
+            <div class="flex items-center text-gray-600">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+              </svg>
+              <%= job.category %>
+            </div>
+            <div class="flex items-center text-gray-600">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              Posted <%= new Date(job.postedDate).toLocaleDateString() %>
+            </div>
+          </div>
+          
+          <div class="text-lg font-semibold text-blue-600"><%= job.salary %></div>
+        </div>
+        
+        <hr class="my-6 border-gray-200">
+        
+        <div class="mb-8">
+          <h2 class="text-xl font-semibold mb-4">Job Description</h2>
+          <div class="prose max-w-none">
+            <%= job.description.replace(/\n/g, '<br>') %>
+          </div>
+        </div>
+        
+        <div>
+          <h2 class="text-xl font-semibold mb-4">Requirements</h2>
+          <div class="prose max-w-none">
+            <%= job.requirements.replace(/\n/g, '<br>') %>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Sidebar -->
+    <div class="lg:col-span-1">
+      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h2 class="text-lg font-semibold mb-4">Apply for this job</h2>
+        
+        <% if (job.applicationUrl) { %>
+          <a href="<%= job.applicationUrl %>" target="_blank" rel="noopener noreferrer" class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center px-4 py-3 rounded-lg font-medium transition-colors mb-4">
+            Apply on Company Website
+          </a>
+        <% } %>
+        
+        <% if (job.contactEmail) { %>
+          <a href="mailto:<%= job.contactEmail %>?subject=Application for <%= job.title %> position" class="block w-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-center px-4 py-3 rounded-lg font-medium transition-colors">
+            Email Your Application
+          </a>
+        <% } %>
+        
+        <div class="mt-6 text-sm text-gray-600">
+          <p>When applying, mention that you found this job on the City Platform Job Board.</p>
+        </div>
+      </div>
+      
+      <% if (relatedJobs && relatedJobs.length > 0) { %>
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-lg font-semibold mb-4">Similar Jobs</h2>
+          
+          <div class="space-y-4">
+            <% relatedJobs.forEach(relatedJob => { %>
+              <a href="/jobs/<%= relatedJob.id %>" class="block p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                <h3 class="font-medium text-gray-900 mb-1"><%= relatedJob.title %></h3>
+                <div class="text-sm text-gray-600 mb-2"><%= relatedJob.company %></div>
+                <div class="flex items-center text-xs text-gray-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <%= relatedJob.location %>
+                </div>
+              </a>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+

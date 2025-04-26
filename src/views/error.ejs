@@ -1,0 +1,23 @@
+<div class="container mx-auto px-4 py-16">
+    <div class="bg-red-50 border border-red-200 rounded-lg p-8 max-w-2xl mx-auto">
+      <div class="flex items-center mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <h1 class="text-2xl font-bold text-red-700">Something went wrong</h1>
+      </div>
+      <p class="text-gray-700 mb-6">We're sorry, but an error occurred while processing your request.</p>
+      
+      <% if (process.env.NODE_ENV !== 'production') { %>
+        <div class="bg-white p-4 rounded border border-gray-200 mb-6 overflow-auto">
+          <pre class="text-sm text-red-600"><%= error.stack %></pre>
+        </div>
+      <% } %>
+      
+      <div class="flex justify-between">
+        <a href="/" class="text-city-primary hover:underline">Go back home</a>
+        <a href="#" onclick="window.location.reload()" class="text-city-primary hover:underline">Try again</a>
+      </div>
+    </div>
+  </div>
+  

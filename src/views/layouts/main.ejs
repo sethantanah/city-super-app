@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  
+  <link rel="stylesheet" href="/css/output.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="bg-gray-900 text-white sticky top-0 z-50 shadow-lg">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <!-- Logo/Brand -->
+        <a href="/" class="flex items-center space-x-3 group">
+          <div class="p-2 bg-blue-600 rounded-lg group-hover:rotate-12 transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <span class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">City</span>
+        </a>
+  
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:block">
+          <ul class="flex space-x-8 items-center">
+            <li>
+              <a href="/" class="relative py-2 px-1 hover:text-blue-400 transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-500 hover:after:w-full after:transition-all after:duration-300">
+                Home
+              </a>
+            </li>
+            <li>
+              <a href="#" class="relative py-2 px-1 hover:text-blue-400 transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-500 hover:after:w-full after:transition-all after:duration-300">
+                About
+              </a>
+            </li>
+            <li>
+              <a href="#" class="relative py-2 px-1 hover:text-blue-400 transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-500 hover:after:w-full after:transition-all after:duration-300">
+                Contact
+              </a>
+            </li>
+            <li>
+              <a href="#" class="ml-4 px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-800 rounded-full font-medium hover:from-blue-500 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-blue-500/20 flex items-center space-x-2">
+                <span>Sign In</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </nav>
+  
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden p-2 focus:outline-none" aria-label="Menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+  
+      <!-- Mobile Navigation (Hidden by default) -->
+      <div class="md:hidden hidden bg-gray-800 pb-4 px-4">
+        <ul class="flex flex-col space-y-3">
+          <li>
+            <a href="/" class="block py-2 px-2 hover:bg-gray-700 rounded transition-colors">Home</a>
+          </li>
+          <li>
+            <a href="#" class="block py-2 px-2 hover:bg-gray-700 rounded transition-colors">About</a>
+          </li>
+          <li>
+            <a href="#" class="block py-2 px-2 hover:bg-gray-700 rounded transition-colors">Contact</a>
+          </li>
+          <li>
+            <a href="#" class="block mt-2 py-2 px-4 bg-blue-600 text-center rounded-full font-medium hover:bg-blue-700 transition-colors">Sign In</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  
+
+
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <%- body %>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-xl font-bold mb-4">City</h3>
+          <p class="text-gray-400">Your one-stop urban platform for local services, jobs, and community.</p>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Services</h4>
+          <ul class="space-y-2">
+            <li><a href="/jobs" class="text-gray-400 hover:text-white">Job Board</a></li>
+            <li><a href="/billboards" class="text-gray-400 hover:text-white">Billboard Market</a></li>
+            <li><a href="/thrift" class="text-gray-400 hover:text-white">Thrift Store</a></li>
+            <li><a href="/events" class="text-gray-400 hover:text-white">Local Events</a></li>
+            <li><a href="/services" class="text-gray-400 hover:text-white">Services Directory</a></li>
+            <li><a href="/housing" class="text-gray-400 hover:text-white">Housing</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Company</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Press</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Connect</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Support</a></li>
+            <li>
+              <div class="flex space-x-4 mt-2">
+                <a href="#" class="text-gray-400 hover:text-white">
+                  <i data-feather="facebook"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white">
+                  <i data-feather="twitter"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white">
+                  <i data-feather="instagram"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white">
+                  <i data-feather="linkedin"></i>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400">&copy; 2023 City Platform. All rights reserved.</p>
+        <div class="flex space-x-6 mt-4 md:mt-0">
+          <a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a>
+          <a href="#" class="text-gray-400 hover:text-white">Terms of Service</a>
+          <a href="#" class="text-gray-400 hover:text-white">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize Feather icons
+    feather.replace();
+  </script>
+
+  <script>
+    // Mobile menu toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenuButton = document.querySelector('button[aria-label="Menu"]');
+      const mobileMenu = document.querySelector('.md\\:hidden.hidden');
+  
+      mobileMenuButton.addEventListener('click', function() {
+        mobileMenu.classList.toggle('hidden');
+        
+        // Toggle aria-expanded attribute
+        const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+        mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+      });
+    });
+  </script>
+</body>
+</html>
