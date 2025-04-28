@@ -1,0 +1,177 @@
+<div class="ad-space-hero">
+    <div class="hero-content">
+      <div class="logo-container">
+        <i data-feather="box" class="main-icon"></i>
+        <h1>Ad<span class="highlight">Space</span></h1>
+      </div>
+      
+      <p class="tagline">The marketplace for outdoor advertising spaces</p>
+      
+      <div class="value-props">
+        <div class="value-prop">
+          <i data-feather="map"></i>
+          <h3>Discover</h3>
+          <p>Find premium billboard locations across the city</p>
+        </div>
+        <div class="value-prop">
+          <i data-feather="dollar-sign"></i>
+          <h3>Monetize</h3>
+          <p>List your unused ad spaces and earn revenue</p>
+        </div>
+        <div class="value-prop">
+          <i data-feather="bar-chart-2"></i>
+          <h3>Analyze</h3>
+          <p>Get insights on traffic and audience demographics</p>
+        </div>
+      </div>
+      
+      <div class="coming-soon-section">
+        <h2>Launching Soon</h2>
+        <p>We're creating the easiest way to buy and sell outdoor advertising space</p>
+        
+        <div class="components-container">
+          <div class="">
+            <h3>Join our waitlist</h3>
+            <%- include('../components/email-notify-form', { 
+                indent: 'adspace-waiting-list', 
+                placeholder: 'Get early access to AdSpace',
+                buttonText: 'Join Waitlist',
+                successMessage: "You've been added to our advertising space waitlist!"
+              }); %>
+          </div>
+          
+          <div class="component-card">
+            <h3>Follow our journey</h3>
+            <%- include('../components/social-links'); %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <style>
+    .ad-space-hero {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+      padding: 2rem;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #243b53;
+    }
+    
+    .hero-content {
+      text-align: center;
+      max-width: 1200px;
+      width: 100%;
+    }
+    
+    .logo-container {
+      margin-bottom: 2rem;
+    }
+    
+    .main-icon {
+      width: 60px;
+      height: 60px;
+      stroke: #3d4fbe;
+      stroke-width: 2;
+      margin-bottom: 1rem;
+    }
+    
+    h1 {
+      font-size: 3.5rem;
+      margin: 0;
+      font-weight: 800;
+    }
+    
+    .highlight {
+      color: #3d4fbe;
+    }
+    
+    .tagline {
+      font-size: 1.5rem;
+      color: #486581;
+      margin-bottom: 3rem;
+      font-weight: 400;
+    }
+    
+    .value-props {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 4rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .value-prop {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      max-width: 300px;
+      transition: transform 0.3s ease;
+    }
+    
+    .value-prop:hover {
+      transform: translateY(-5px);
+    }
+    
+    .value-prop i {
+      width: 40px;
+      height: 40px;
+      stroke: #3d4fbe;
+      margin-bottom: 1rem;
+    }
+    
+    .value-prop h3 {
+      margin: 0.5rem 0;
+      color: #102a43;
+    }
+    
+    .value-prop p {
+      color: #486581;
+      line-height: 1.6;
+      margin: 0;
+    }
+    
+    .coming-soon-section {
+      background: white;
+      padding: 3rem;
+      border-radius: 16px;
+      max-width: 800px;
+      margin: 0 auto;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .coming-soon-section h2 {
+      color: #102a43;
+      margin-top: 0;
+    }
+    
+    .coming-soon-section p {
+      color: #486581;
+      margin-bottom: 2rem;
+    }
+    
+    .components-container {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .component-card {
+      background: #f8fafc;
+      padding: 2rem;
+      border-radius: 12px;
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .component-card h3 {
+      color: #243b53;
+      margin-top: 0;
+    }
+  </style>
+  

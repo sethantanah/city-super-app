@@ -75,7 +75,7 @@
           >Jobs</a
         >
         <a
-          href="/thrift"
+          href="/market"
           class="px-3 py-1 bg-slate-700/50 hover:bg-slate-700 rounded-full text-sm text-slate-200 transition-colors"
           >Marketplace</a
         >
@@ -117,7 +117,7 @@
         <span class="text-sm font-medium">Jobs</span>
       </a>
       <a
-        href="/thrift"
+        href="/market"
         class="flex-shrink-0 px-5 py-3 text-center hover:bg-gray-100 rounded-lg mx-1"
       >
         <i
@@ -127,11 +127,11 @@
         <span class="text-sm font-medium">Marketplace</span>
       </a>
       <a
-        href="/billboards"
+        href="/adverts"
         class="flex-shrink-0 px-5 py-3 text-center hover:bg-gray-100 rounded-lg mx-1"
       >
         <i data-feather="info" class="h-6 w-6 mx-auto mb-1 text-yellow-500"></i>
-        <span class="text-sm font-medium">Ads</span>
+        <span class="text-sm font-medium">Advertising</span>
       </a>
       <a
         href="/events"
@@ -165,12 +165,13 @@
 <div class="container mx-auto px-4 py-8">
   <!-- Featured Section using our new component -->
   <%- include('components/featured-items', { title: 'Featured in Your Area',
-  items: featuredItems, columns: 3, viewAllLink: '/featured' }) %>
+  badgeText:'Local Highlights', description:'',backgroundImage:'', items:
+  featuredItems, columns: 3, viewAllLink: '/featured' }) %>
 
   <!-- Jobs Section -->
   <%- include('components/featured-items', { title: 'Latest Job Opportunities',
-  items: featuredJobs, columns: 3, viewAllLink: '/jobs' }) %>
-
+  badgeText:'Local Highlights', description:'',backgroundImage:'https://theknowledgeexchangeblog.wordpress.com/wp-content/uploads/2015/06/jobssign2.jpg', items:
+  featuredJobs, columns: 3, viewAllLink: '/jobs' }) %>
 
   <!-- Services Directory -->
   <div>

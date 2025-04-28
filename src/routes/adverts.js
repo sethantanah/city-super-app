@@ -3,7 +3,7 @@ const router = express.Router();
 
 // Billboard market home page
 router.get('/', (req, res) => {
-  res.render('billboards/index', { 
+  res.render('adverts/index', { 
     title: 'Billboard Market - City',
     billboards: [] // This will be populated from the spreadsheet later
   });

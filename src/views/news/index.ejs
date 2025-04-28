@@ -1,0 +1,829 @@
+<div class="container mx-auto px-4 py-4 max-w-7xl">
+  <!-- Streamlined Header -->
+  <header class="mb-6 bg-white shadow rounded-lg p-3 sticky top-0 z-20">
+    <div class="flex items-center justify-between">
+      <h1 class="text-xl font-semibold text-gray-800">News & Weather</h1>
+
+      <!-- Compact Search Area -->
+      <div class="flex items-center gap-2 max-w-md w-full">
+        <div class="relative flex-1">
+          <div
+            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+          >
+            <svg
+              class="w-4 h-4 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              ></path>
+            </svg>
+          </div>
+          <input
+            type="text"
+            id="location-input"
+            placeholder="Search location..."
+            value="<%= location || '' %>"
+            class="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            autocomplete="off"
+          />
+          <ul
+            id="autocomplete-list"
+            class="absolute w-full mt-1 bg-white rounded-lg shadow-lg hidden max-h-60 overflow-y-auto z-30 divide-y divide-gray-100"
+          ></ul>
+        </div>
+
+        <button
+          id="use-geo"
+          class="p-2 text-gray-500 hover:text-blue-600 rounded-lg hover:bg-gray-100 transition-all"
+          title="Use my location"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+            ></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+            ></path>
+          </svg>
+        </button>
+        <button
+          id="fetch-data"
+          class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-lg transition-colors"
+        >
+          <span id="fetch-text">Search</span>
+          <span id="fetch-spinner">
+          <svg
+            id="fetch-spinner"
+            class="hidden w-4 h-4 ml-1 inline animate-spin"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+        </span>
+        </button>
+      </div>
+    </div>
+    <div id="error-message" class="mt-2 text-sm text-red-600 hidden"></div>
+  </header>
+
+  <!-- Loading Skeleton -->
+  <div id="loading-skeleton" class="hidden">
+    <div class="space-y-6">
+      <!-- Weather Skeleton -->
+      <div class="bg-gray-100 rounded-lg p-4 animate-pulse">
+        <div class="flex items-center space-x-4">
+          <div class="bg-gray-300 rounded-full w-12 h-12"></div>
+          <div class="space-y-2">
+            <div class="h-4 bg-gray-300 rounded w-36"></div>
+            <div class="h-6 bg-gray-300 rounded w-16"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Stories Skeleton -->
+      <div>
+        <div class="h-5 bg-gray-300 rounded w-36 mb-4"></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-gray-100 rounded-lg p-3 animate-pulse h-60"></div>
+          <div class="bg-gray-100 rounded-lg p-3 animate-pulse h-60"></div>
+          <div class="bg-gray-100 rounded-lg p-3 animate-pulse h-60"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="flex flex-col md:flex-row gap-6">
+    <!-- Left Column -->
+    <div class="w-full md:w-3/4 space-y-6">
+      <!-- Weather Card (Compact) -->
+      <section id="weather-section" class="hidden">
+        <div
+          id="current-weather"
+          class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow p-4 text-white"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+              <div id="weather-icon" class="w-14 h-14"></div>
+              <div>
+                <h3 id="weather-location" class="text-lg font-medium"></h3>
+                <div class="flex items-baseline">
+                  <p id="weather-temp" class="text-3xl font-bold"></p>
+                  <p
+                    id="weather-condition"
+                    class="ml-2 text-sm capitalize opacity-90"
+                  ></p>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-x-6 gap-y-1 text-xs">
+              <div class="flex items-center">
+                <svg
+                  class="w-4 h-4 mr-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"
+                  ></path>
+                </svg>
+                <span id="weather-humidity"></span>
+              </div>
+              <div class="flex items-center">
+                <svg
+                  class="w-4 h-4 mr-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 12h3v3m0-6h3m-3 9h3m-6-9v3m0 0v3m0-3h3m-6 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+                <span id="weather-feelslike"></span>
+              </div>
+              <div class="flex items-center">
+                <svg
+                  class="w-4 h-4 mr-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 7l4-4m0 0l4 4m-4-4v18"
+                  ></path>
+                </svg>
+                <span id="weather-wind"></span>
+              </div>
+              <div class="flex items-center">
+                <svg
+                  class="w-4 h-4 mr-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+                <span id="weather-updated"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Stories (Edge-Style Cards) -->
+      <section id="featured-section" class="hidden">
+        <div class="flex justify-between items-center mb-3">
+          <h2 class="text-lg font-semibold text-gray-800">Featured Stories</h2>
+          <div class="flex space-x-1">
+            <button
+              id="carousel-prev"
+              class="p-1 rounded-full bg-gray-100 hover:bg-gray-200 transition disabled:opacity-50"
+              disabled
+            >
+              <svg
+                class="w-4 h-4 text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 19l-7-7 7-7"
+                ></path>
+              </svg>
+            </button>
+            <button
+              id="carousel-next"
+              class="p-1 rounded-full bg-gray-100 hover:bg-gray-200 transition disabled:opacity-50"
+              disabled
+            >
+              <svg
+                class="w-4 h-4 text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Edge-Style Card Layout -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 gap-4"
+          id="features-grid"
+        ></div>
+      </section>
+
+      <!-- News by Category (Edge-Style Layout) -->
+      <section id="news-section" class="hidden">
+        <div id="news-categories" class="space-y-6"></div>
+      </section>
+    </div>
+
+    <!-- Right Column -->
+    <div class="w-full md:w-1/4">
+      <!-- AI Insights -->
+      <section id="ai-insights-section" class="mb-6 hidden">
+        <div
+          class="bg-white rounded-lg shadow border-l-4 border-blue-500 overflow-hidden"
+        >
+          <div class="p-3 bg-blue-50 border-b border-gray-100">
+            <div class="flex items-center justify-between">
+              <h2 class="text-sm font-semibold text-gray-800">AI Insights</h2>
+              <div class="flex items-center text-xs text-blue-600">
+                <svg
+                  class="w-3 h-3 mr-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  ></path>
+                </svg>
+                <span>AI Generated</span>
+              </div>
+            </div>
+          </div>
+          <div id="ai-insights" class="p-4 prose-sm max-w-none">
+            <div class="animate-pulse space-y-2">
+              <div class="h-3 bg-gray-200 rounded w-full"></div>
+              <div class="h-3 bg-gray-200 rounded w-5/6"></div>
+              <div class="h-3 bg-gray-200 rounded w-4/5"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Links -->
+      <div class="bg-white rounded-lg shadow mb-6">
+        <div class="p-3 border-b border-gray-100">
+          <h2 class="text-sm font-semibold text-gray-800">Quick Access</h2>
+        </div>
+        <div class="p-4">
+          <div class="grid grid-cols-2 gap-2">
+            <button
+              class="p-2 text-sm text-center rounded bg-gray-50 hover:bg-gray-100 text-gray-700 transition"
+            >
+              Local News
+            </button>
+            <button
+              class="p-2 text-sm text-center rounded bg-gray-50 hover:bg-gray-100 text-gray-700 transition"
+            >
+              Business
+            </button>
+            <button
+              class="p-2 text-sm text-center rounded bg-gray-50 hover:bg-gray-100 text-gray-700 transition"
+            >
+              Technology
+            </button>
+            <button
+              class="p-2 text-sm text-center rounded bg-gray-50 hover:bg-gray-100 text-gray-700 transition"
+            >
+              Health
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // public/scripts.js
+  document.addEventListener("DOMContentLoaded", () => {
+    // DOM Elements
+    const locationInput = document.getElementById("location-input");
+    const autocompleteList = document.getElementById("autocomplete-list");
+    const fetchButton = document.getElementById("fetch-data");
+    const fetchText = document.getElementById("fetch-text");
+    const fetchSpinner = document.getElementById("fetch-spinner");
+    const geoButton = document.getElementById("use-geo");
+    const errorMessage = document.getElementById("error-message");
+    const loadingSkeleton = document.getElementById("loading-skeleton");
+
+    // Section elements
+    const weatherSection = document.getElementById("weather-section");
+    const featuredSection = document.getElementById("featured-section");
+    const newsSection = document.getElementById("news-section");
+    const aiInsightsSection = document.getElementById("ai-insights-section");
+
+    // Weather elements
+    const weatherIcon = document.getElementById("weather-icon");
+    const weatherLocation = document.getElementById("weather-location");
+    const weatherTemp = document.getElementById("weather-temp");
+    const weatherCondition = document.getElementById("weather-condition");
+    const weatherHumidity = document.getElementById("weather-humidity");
+    const weatherFeelslike = document.getElementById("weather-feelslike");
+    const weatherWind = document.getElementById("weather-wind");
+    const weatherUpdated = document.getElementById("weather-updated");
+
+    // Features grid
+    const featuresGrid = document.getElementById("features-grid");
+
+    // News and AI elements
+    const newsCategories = document.getElementById("news-categories");
+    const aiInsights = document.getElementById("ai-insights");
+
+    // Carousel elements
+    const carouselPrev = document.getElementById("carousel-prev");
+    const carouselNext = document.getElementById("carousel-next");
+
+    // Autocomplete dataset
+    const locations = [
+      "Accra, Ghana",
+      "Kumasi, Ghana",
+      "Tamale, Ghana",
+      "Takoradi, Ghana",
+      "Cape Coast, Ghana",
+      "Lagos, Nigeria",
+      "Abuja, Nigeria",
+      "Nairobi, Kenya",
+      "Johannesburg, South Africa",
+    ];
+
+    // Simple coordinate-to-city mapping for reverse geocoding
+    const coordinateToCity = [
+      { lat: 5.6037, lon: -0.187, city: "Accra, Ghana" },
+      { lat: 6.6885, lon: -1.6244, city: "Kumasi, Ghana" },
+      { lat: 9.4008, lon: -0.8393, city: "Tamale, Ghana" },
+      { lat: 4.8845, lon: -1.7554, city: "Takoradi, Ghana" },
+      { lat: 5.1054, lon: -1.2466, city: "Cape Coast, Ghana" },
+    ];
+
+    // Carousel state
+    let currentPage = 0;
+    let totalPages = 0;
+    let storyItems = [];
+    let autoPlayInterval = null;
+
+    // Check for stored location on page load
+    const storedLocation = localStorage.getItem("userLocation");
+    if (storedLocation) {
+      locationInput.value = storedLocation;
+      // Auto-fetch weather if there's a stored location
+      setTimeout(() => fetchButton.click(), 500);
+    } else {
+      // Auto-request location on first visit
+      setTimeout(() => geoButton.click(), 1000);
+    }
+
+    // Initialize autocomplete
+    locationInput.addEventListener("input", () => {
+      const query = locationInput.value.toLowerCase();
+      autocompleteList.innerHTML = "";
+
+      if (query.length > 1) {
+        const matches = locations
+          .filter((loc) => loc.toLowerCase().includes(query))
+          .slice(0, 5); // Limit to 5 results
+
+        if (matches.length > 0) {
+          matches.forEach((match) => {
+            const li = document.createElement("li");
+            li.className =
+              "p-2 hover:bg-blue-50 cursor-pointer text-gray-800 transition flex items-center text-sm";
+
+            // Highlight matching text
+            const regex = new RegExp(query, "gi");
+            const highlighted = match.replace(
+              regex,
+              (match) =>
+                `<span class="font-semibold text-blue-600">${match}</span>`
+            );
+
+            li.innerHTML = `
+                        <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        </svg>
+                        ${highlighted}
+                    `;
+
+            li.addEventListener("click", () => {
+              locationInput.value = match;
+              autocompleteList.classList.add("hidden");
+              // Auto-fetch when selecting a location
+              fetchButton.click();
+            });
+
+            autocompleteList.appendChild(li);
+          });
+          autocompleteList.classList.remove("hidden");
+        } else {
+          autocompleteList.classList.add("hidden");
+        }
+      } else {
+        autocompleteList.classList.add("hidden");
+      }
+    });
+
+    // Hide autocomplete when clicking outside
+    document.addEventListener("click", (e) => {
+      if (
+        !locationInput.contains(e.target) &&
+        !autocompleteList.contains(e.target)
+      ) {
+        autocompleteList.classList.add("hidden");
+      }
+    });
+
+    // Browser location (Geolocation)
+    geoButton.addEventListener("click", () => {
+      if (!navigator.geolocation) {
+        showError("Geolocation is not supported by your browser.");
+        return;
+      }
+
+      geoButton.innerHTML = `
+            <svg class="animate-spin w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+        `;
+
+      errorMessage.classList.add("hidden");
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          // Simple reverse geocoding
+          const city = coordinateToCity.find(
+            (c) =>
+              Math.abs(c.lat - latitude) < 1 && Math.abs(c.lon - longitude) < 1
+          );
+          const locationValue = city ? city.city : "Accra, Ghana";
+          locationInput.value = locationValue;
+
+          // Store in localStorage
+          localStorage.setItem("userLocation", locationValue);
+
+          resetGeoButton();
+          // Auto-fetch data
+          fetchButton.click();
+        },
+        (error) => {
+          showError(
+            "Unable to retrieve your location. Please enter it manually."
+          );
+          resetGeoButton();
+          console.error("Geolocation Error:", error);
+        }
+      );
+    });
+
+    function resetGeoButton() {
+      geoButton.innerHTML = `
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+        `;
+    }
+
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.classList.remove("hidden");
+    }
+
+    // Load persisted data
+    const persistedData = localStorage.getItem("appData");
+    if (persistedData) {
+      const data = JSON.parse(persistedData);
+      renderData(data);
+    }
+
+    // Fetch data
+    fetchButton.addEventListener("click", async () => {
+      const location = locationInput.value.trim() || "Accra, Ghana";
+
+      // Save location to localStorage
+      localStorage.setItem("userLocation", location);
+
+      // Show loading state
+      fetchSpinner.classList.remove("hidden");
+      fetchButton.disabled = true;
+      fetchText.textContent = "Loading";
+
+      errorMessage.classList.add("hidden");
+
+      // Show loading skeleton
+      hideAllSections();
+      loadingSkeleton.classList.remove("hidden");
+
+      try {
+        const response = await fetch("/news/fetch-data", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ location }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.errors && data.errors.length > 0) {
+          showError(data.errors.join(" "));
+        }
+
+        // Persist data
+        localStorage.setItem("appData", JSON.stringify(data));
+
+        // Render data
+        renderData(data);
+        showAllSections();
+      } catch (error) {
+        console.error("Fetch Error:", error);
+        showError("Unable to connect. Please try again later.");
+      } finally {
+        // Hide loading state
+        fetchButton.disabled = false;
+        fetchText.textContent = "Search";
+        fetchSpinner.classList.add("hidden");
+        loadingSkeleton.classList.add("hidden");
+        showAllSections();
+      }
+    });
+
+    function hideAllSections() {
+      weatherSection.classList.add("hidden");
+      featuredSection.classList.add("hidden");
+      newsSection.classList.add("hidden");
+      aiInsightsSection.classList.add("hidden");
+    }
+
+    function showAllSections() {
+      weatherSection.classList.remove("hidden");
+      featuredSection.classList.remove("hidden");
+      newsSection.classList.remove("hidden");
+      aiInsightsSection.classList.remove("hidden");
+    }
+
+    // Card navigation for Featured Stories
+    function updateCardNavigation() {
+      carouselPrev.disabled = currentPage === 0;
+      carouselNext.disabled = currentPage >= totalPages - 1;
+    }
+
+    carouselPrev.addEventListener("click", () => {
+      if (currentPage > 0) {
+        currentPage--;
+        renderFeaturedStories();
+      }
+    });
+
+    carouselNext.addEventListener("click", () => {
+      if (currentPage < totalPages - 1) {
+        currentPage++;
+        renderFeaturedStories();
+      }
+    });
+
+    // Auto-play for Featured Stories (every 5 seconds)
+    function startAutoPlay() {
+      clearInterval(autoPlayInterval);
+      if (storyItems.length > 1) {
+        autoPlayInterval = setInterval(() => {
+          if (currentPage < totalPages - 1) {
+            currentPage++;
+          } else {
+            currentPage = 0;
+          }
+          renderFeaturedStories();
+        }, 5000);
+      }
+    }
+
+    function renderFeaturedStories() {
+      if (!storyItems || storyItems.length === 0) {
+        featuresGrid.innerHTML = "";
+        updateCardNavigation();
+        return;
+      }
+
+      const storiesPerPage = window.innerWidth < 768 ? 1 : 3;
+      const startIdx = currentPage * storiesPerPage;
+      const endIdx = Math.min(startIdx + storiesPerPage, storyItems.length);
+
+      featuresGrid.innerHTML = "";
+
+      for (let i = startIdx; i < endIdx; i++) {
+        const story = storyItems[i];
+        const card = document.createElement("div");
+        card.className =
+          "bg-white rounded-lg shadow overflow-hidden hover:shadow-md transition";
+        card.innerHTML = `
+                <div class="relative h-40 overflow-hidden">
+                    <img src="${
+                      story.thumbnail || "https://via.placeholder.com/400x250"
+                    }" 
+                         alt="${story.title}" 
+                         class="w-full h-full object-cover">
+                    <div class="absolute top-2 left-2">
+                        <span class="px-2 py-1 bg-blue-600 text-white text-xs rounded">${
+                          story.category || "General"
+                        }</span>
+                    </div>
+                </div>
+                <div class="p-3">
+                    <h3 class="text-base font-medium text-gray-800 line-clamp-2 mb-1">${
+                      story.title
+                    }</h3>
+                    <p class="text-xs text-gray-500 mb-2">${
+                      story.source || "News"
+                    } • ${story.date || "Recent"}</p>
+                    <p class="text-sm text-gray-600 line-clamp-2 mb-3">${
+                      story.snippet || "No summary available."
+                    }</p>
+                    <a href="${story.link}" target="_blank" 
+                       class="text-xs text-blue-600 hover:underline inline-flex items-center">
+                        Read full story
+                        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                </div>
+            `;
+        featuresGrid.appendChild(card);
+      }
+
+      updateCardNavigation();
+      startAutoPlay();
+    }
+
+    function renderData(data) {
+      // Weather
+      if (data.weather) {
+        weatherIcon.innerHTML = `<img src="https:${data.weather.current.condition.icon}" alt="${data.weather.current.condition.text}" class="w-full h-full">`;
+        weatherLocation.textContent = `${data.weather.location.name}, ${data.weather.location.country}`;
+        weatherTemp.textContent = `${data.weather.current.temp_c}°C`;
+        weatherCondition.textContent = data.weather.current.condition.text;
+        weatherHumidity.textContent = `${data.weather.current.humidity}%`;
+        weatherFeelslike.textContent = `Feels like ${data.weather.current.feelslike_c}°C`;
+        weatherWind.textContent = `${data.weather.current.wind_kph} km/h`;
+        weatherUpdated.textContent = `${new Date(
+          data.weather.current.last_updated
+        ).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+
+        weatherSection.classList.remove("hidden");
+      }
+
+      // Featured Stories
+      if (data.featuredStories && data.featuredStories.length > 0) {
+        storyItems = data.featuredStories;
+        currentPage = 0;
+
+        const storiesPerPage = window.innerWidth < 768 ? 1 : 3;
+        totalPages = Math.ceil(storyItems.length / storiesPerPage);
+
+        renderFeaturedStories();
+        featuredSection.classList.remove("hidden");
+      } else {
+        storyItems = [];
+        featuresGrid.innerHTML = "";
+        updateCardNavigation();
+        featuredSection.classList.add("hidden");
+      }
+
+      // News by Category
+      if (
+        data.categories &&
+        Object.keys(data.categories).length > 0 &&
+        data.news
+      ) {
+        newsCategories.innerHTML = "";
+
+        for (const [category, indices] of Object.entries(data.categories)) {
+          const articles = indices
+            .map((index) => data.news[index])
+            .filter((article) => article);
+          if (articles.length === 0) continue;
+
+          const categoryDiv = document.createElement("div");
+          categoryDiv.className = "mb-6";
+
+          const categoryTitle = document.createElement("h3");
+          categoryTitle.className = "text-lg font-semibold text-gray-800 mb-3";
+          categoryTitle.textContent = category;
+          categoryDiv.appendChild(categoryTitle);
+
+          const articlesGrid = document.createElement("div");
+          articlesGrid.className = "grid grid-cols-1 md:grid-cols-3 gap-4";
+
+          articles.slice(0, 3).forEach((article) => {
+            const articleCard = document.createElement("div");
+            articleCard.className =
+              "bg-white rounded-lg shadow overflow-hidden hover:shadow-md transition h-full flex flex-col";
+            articleCard.innerHTML = `
+                        <div class="relative h-32 overflow-hidden">
+                            <img src="${
+                              article.thumbnail ||
+                              "https://via.placeholder.com/400x200"
+                            }" 
+                                 alt="${article.title}" 
+                                 class="w-full h-full object-cover">
+                            <span class="absolute top-2 left-2 px-2 py-1 bg-blue-600 text-white text-xs rounded">${category}</span>
+                        </div>
+                        <div class="p-3 flex-1 flex flex-col">
+                            <h4 class="text-base font-medium text-gray-800 line-clamp-2">${
+                              article.title
+                            }</h4>
+                            <div class="flex items-center mt-1 text-xs text-gray-500">
+                                <span>${article.source || "News"}</span>
+                                <span class="mx-1">•</span>
+                                <span>${article.date || "Recent"}</span>
+                            </div>
+                            <p class="text-sm text-gray-600 line-clamp-2 mt-2 flex-1">${
+                              article.snippet || "No summary available."
+                            }</p>
+                            <a href="${article.link}" target="_blank" 
+                               class="text-xs text-blue-600 hover:underline mt-2 inline-flex items-center">
+                                Read full story
+                                <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    `;
+            articlesGrid.appendChild(articleCard);
+          });
+
+          categoryDiv.appendChild(articlesGrid);
+          newsCategories.appendChild(categoryDiv);
+        }
+        newsSection.classList.remove("hidden");
+      } else {
+        newsCategories.innerHTML = "";
+        newsSection.classList.add("hidden");
+      }
+
+      // AI Insights
+      if (data.aiInsights) {
+        aiInsights.innerHTML = data.aiInsights;
+        aiInsightsSection.classList.remove("hidden");
+      } else {
+        aiInsights.innerHTML = "";
+        aiInsightsSection.classList.add("hidden");
+      }
+    }
+  });
+</script>

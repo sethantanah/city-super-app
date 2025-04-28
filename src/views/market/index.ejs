@@ -1,0 +1,189 @@
+<div class="coming-soon-hero">
+    <div class="hero-content">
+      <i data-feather="shopping-bag" class="main-icon"></i>
+      <h1>Market Place <span class="highlight">City</span></h1>
+      <p class="tagline">Your local marketplace is coming soon!</p>
+      
+      <div class="countdown-card">
+        <div class="countdown-item">
+          <span id="days">00</span>
+          <span>Days</span>
+        </div>
+        <div class="countdown-item">
+          <span id="hours">00</span>
+          <span>Hours</span>
+        </div>
+        <div class="countdown-item">
+          <span id="minutes">00</span>
+          <span>Minutes</span>
+        </div>
+      </div>
+      
+      <p class="description">We're building a better way to buy and sell in your community</p>
+      
+      <div class="features-grid">
+        <div class="feature">
+          <i data-feather="map-pin"></i>
+          <p>Local sellers</p>
+        </div>
+        <div class="feature">
+          <i data-feather="shield"></i>
+          <p>Verified users</p>
+        </div>
+        <div class="feature">
+          <i data-feather="dollar-sign"></i>
+          <p>Great deals</p>
+        </div>
+      </div>
+      
+      <div>
+        <%- include('../components/email-notify-form', { 
+            indent: 'marketplace-waiting-list', 
+            placeholder: 'Get notified when we launch',
+            buttonText: 'Notify Me',
+            successMessage: "Thanks! We'll notify you when we launch."
+          }); %>
+      </div>
+  
+      
+      <div>
+        <%- include('../components/social-links', { 
+          }); %>
+      </div>
+    </div>
+  </div>
+  
+  <style>
+    .coming-soon-hero {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 2rem;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    .hero-content {
+      text-align: center;
+      max-width: 700px;
+      width: 100%;
+    }
+    
+    .main-icon {
+      width: 60px;
+      height: 60px;
+      stroke: #4f46e5;
+      stroke-width: 2;
+      margin-bottom: 1.5rem;
+    }
+    
+    h1 {
+      font-size: 3rem;
+      color: #1e293b;
+      margin-bottom: 0.5rem;
+    }
+    
+    .highlight {
+      color: #4f46e5;
+    }
+    
+    .tagline {
+      font-size: 1.25rem;
+      color: #64748b;
+      margin-bottom: 2.5rem;
+    }
+    
+    .countdown-card {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .countdown-item {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      min-width: 100px;
+    }
+    
+    .countdown-item span:first-child {
+      display: block;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #4f46e5;
+      margin-bottom: 0.25rem;
+    }
+    
+    .countdown-item span:last-child {
+      font-size: 0.875rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .description {
+      font-size: 1.125rem;
+      color: #475569;
+      margin: 2rem 0;
+      line-height: 1.6;
+    }
+    
+    .features-grid {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2.5rem 0;
+    }
+    
+    .feature {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .feature i {
+      width: 24px;
+      height: 24px;
+      stroke: #4f46e5;
+    }
+    
+    .feature p {
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+    
+    .notify-form {
+      margin: auto;
+    }
+    
+  </style>
+  
+  <script>
+    // Initialize Feather icons
+    feather.replace();
+    
+    // Simple countdown timer (set your launch date)
+    const launchDate = new Date();
+    launchDate.setDate(launchDate.getDate() + 30); // 30 days from now
+    
+    function updateCountdown() {
+      const now = new Date();
+      const diff = launchDate - now;
+      
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      
+      document.getElementById('days').textContent = days.toString().padStart(2, '0');
+      document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+      document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+    }
+    
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
+
+  </script>

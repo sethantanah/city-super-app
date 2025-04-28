@@ -8,7 +8,7 @@
           <% if (locals.query || locals.category || locals.type || locals.location) { %>
             Search Results
           <% } else { %>
-            Featured Job Listings
+            Job Listings
           <% } %>
         </h2>
         <% if (locals.jobs && jobs.length > 0) { %>
@@ -26,7 +26,7 @@
     <% if (locals.jobs && jobs.length > 0) { %>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <% jobs.forEach(job => { %>
-          <a href="/jobs/<%= job.id %>" class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-6 block border border-gray-100 hover:border-indigo-100 flex flex-col h-full">
+          <a href="/jobs/details/<%= job._id %>" class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-6 block border border-gray-100 hover:border-indigo-100 flex flex-col h-full">
             <div class="flex items-start gap-4 mb-4">
               <div class="w-12 h-12 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
                 <% if (job.companyLogo) { %>

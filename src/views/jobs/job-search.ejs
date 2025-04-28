@@ -2,7 +2,7 @@
 <div class="job-search-component">
   <!-- Sticky Search Bar -->
   <div id="stickySearch" class="fixed top-0 left-0 right-0 z-50 -translate-y-full transition-all duration-300 opacity-0 pointer-events-none bg-gradient-to-br from-blue-900 to-indigo-900 shadow-md">
-    <div class="container mx-auto px-4 py-2">
+    <div class="container mx-auto px-4 py-4">
       <form action="/jobs" method="GET" class="flex items-center gap-2">
         <div class="flex-grow relative">
           <input 
@@ -97,45 +97,37 @@
           </div>
           
           <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="relative">
-              <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-              </svg>
-              <select name="category" class="w-full pl-12 pr-4 py-3 rounded-xl bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow border border-gray-200">
-                <option value="">All Categories</option>
-                <% if (locals.categories) { %>
-                  <% categories.forEach(cat => { %>
-                    <option value="<%= cat %>" <%= locals.category === cat ? 'selected' : '' %>><%= cat %></option>
-                  <% }) %>
-                <% } %>
-              </select>
+            <!-- Category Select -->
+            <div>
+              <%- include('../components/custom-select', {
+                name: 'category',
+                placeholder: 'All Categories',
+                selectedValue: locals.category,
+                options: locals.categories ? locals.categories.map(cat => ({ value: cat, label: cat })) : [],
+                icon: '' // Assuming you have a folder.svg icon
+              }) %>
             </div>
-            <div class="relative">
-              <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              <select name="type" class="w-full pl-12 pr-4 py-3 rounded-xl bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow border border-gray-200">
-                <option value="">All Job Types</option>
-                <% if (locals.jobTypes) { %>
-                  <% jobTypes.forEach(jType => { %>
-                    <option value="<%= jType %>" <%= locals.type === jType ? 'selected' : '' %>><%= jType %></option>
-                  <% }) %>
-                <% } %>
-              </select>
+          
+            <!-- Job Type Select -->
+            <div>
+              <%- include('../components/custom-select', {
+                name: 'type',
+                placeholder: 'All Job Types',
+                selectedValue: locals.type,
+                options: locals.jobTypes ? locals.jobTypes.map(type => ({ value: type, label: type })) : [],
+                icon: '' // Assuming you have a briefcase.svg icon
+              }) %>
             </div>
-            <div class="relative">
-              <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <select name="location" class="w-full pl-12 pr-4 py-3 rounded-xl bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow border border-gray-200">
-                <option value="">All Locations</option>
-                <% if (locals.locations) { %>
-                  <% locations.forEach(loc => { %>
-                    <option value="<%= loc %>" <%= locals.location === loc ? 'selected' : '' %>><%= loc %></option>
-                  <% }) %>
-                <% } %>
-              </select>
+          
+            <!-- Location Select -->
+            <div>
+              <%- include('../components/custom-select', {
+                name: 'location',
+                placeholder: 'All Locations',
+                selectedValue: locals.location,
+                options: locals.locations ? locals.locations.map(loc => ({ value: loc, label: loc })) : [],
+                icon: '' // Assuming you have a location.svg icon
+              }) %>
             </div>
           </div>
         </form>
@@ -194,9 +186,9 @@
           
           // Simulate API call - replace with actual form submission
           setTimeout(() => {
-            hideLoading();
+            //hideLoading();
             this.submit(); // Remove this if using AJAX
-          }, 1500);
+          }, 100);
         });
       });
     });

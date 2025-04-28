@@ -1,0 +1,462 @@
+<div class="contact-page">
+  <div class="contact-container">
+    <!-- Header Section -->
+    <div class="contact-header">
+      <i data-feather="mail" class="contact-icon"></i>
+      <h1>Contact <span class="highlight">Us</span></h1>
+      <p>Have questions? Reach out—we're here to help.</p>
+    </div>
+
+    <!-- Two-Column Layout -->
+    <div class="contact-columns">
+      <!-- Contact Form -->
+      <div class="contact-form-container">
+        <h2>Send a Message</h2>
+        <form class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject">
+              <option value="general">General Inquiry</option>
+              <option value="support">Technical Support</option>
+              <option value="partnership">Partnership</option>
+              <option value="feedback">Feedback</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+
+          <button type="submit" class="submit-button">
+            <i data-feather="send"></i> Send Message
+          </button>
+
+          <div class="message-container" style="display: none"></div>
+        </form>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="contact-info">
+        <h2>Other Ways to Connect</h2>
+
+        <div class="info-card">
+          <i data-feather="mail"></i>
+          <div>
+            <h3>Email Us</h3>
+            <p>support@yourmarketplace.com</p>
+            <p>partners@yourmarketplace.com</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <i data-feather="phone"></i>
+          <div>
+            <h3>Call Us</h3>
+            <p>+1 (555) 123-4567</p>
+            <p>Mon-Fri, 9am-5pm EST</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <i data-feather="map-pin"></i>
+          <div>
+            <h3>Visit Us</h3>
+            <p>123 Marketplace St.</p>
+            <p>San Francisco, CA 94107</p>
+          </div>
+        </div>
+
+        <div class="social-section">
+          <h3>Follow Us</h3>
+          <%- include('../components/social-links'); %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ Accordion (Optional) -->
+<div class="faq-section">
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq-accordion">
+    <div class="faq-item">
+      <button class="faq-question">
+        <span>How do I list my property/service?</span>
+        <i data-feather="chevron-down"></i>
+      </button>
+      <div class="faq-answer">
+        <p>
+          You can sign up as a provider in just a few minutes. After
+          verification, you'll be able to create listings through your
+          dashboard.
+        </p>
+      </div>
+    </div>
+    <!-- Add more FAQ items as needed -->
+  </div>
+</div>
+
+<style>
+  .contact-page {
+    padding: 4rem 2rem;
+    background: #f8fafc;
+    min-height: 100vh;
+    font-family: "Inter", sans-serif;
+  }
+
+  .contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    padding: 2rem;
+  }
+
+  .contact-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .contact-icon {
+    width: 60px;
+    height: 60px;
+    stroke: #0369a1;
+    margin-bottom: 1rem;
+  }
+
+  .contact-header h1 {
+    font-size: 2.5rem;
+    color: #0c4a6e;
+    margin-bottom: 0.5rem;
+  }
+
+  .highlight {
+    color: #0369a1;
+  }
+
+  .contact-header p {
+    color: #64748b;
+    font-size: 1.1rem;
+  }
+
+  .contact-columns {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-form-container,
+  .contact-info {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  .contact-form-container h2,
+  .contact-info h2 {
+    color: #0c4a6e;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #475569;
+    font-weight: 500;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #0369a1;
+    box-shadow: 0 0 0 3px rgba(3, 105, 161, 0.1);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .submit-button {
+    background: #0369a1;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.2s;
+  }
+
+  .submit-button:hover {
+    background: #075985;
+  }
+
+  .submit-button i {
+    width: 18px;
+    height: 18px;
+  }
+
+  .info-card {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    background: #f8fafc;
+    border-radius: 12px;
+  }
+
+  .info-card i {
+    width: 24px;
+    height: 24px;
+    stroke: #0369a1;
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+  }
+
+  .info-card h3 {
+    color: #0c4a6e;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+  }
+
+  .info-card p {
+    color: #475569;
+    margin: 0.25rem 0;
+    font-size: 0.95rem;
+  }
+
+  .social-section {
+    margin-top: 2rem;
+  }
+
+  .social-section h3 {
+    color: #0c4a6e;
+    margin-bottom: 1rem;
+  }
+
+  /* FAQ Styles */
+  .faq-section {
+    max-width: 1200px;
+    margin: 3rem auto 0;
+    padding: 0 2rem;
+  }
+
+  .faq-section h2 {
+    color: #0c4a6e;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .faq-accordion {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    margin-bottom: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .faq-question {
+    width: 100%;
+    padding: 1.25rem;
+    background: #f8fafc;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #0c4a6e;
+  }
+
+  .faq-question i {
+    width: 20px;
+    height: 20px;
+    stroke: #0369a1;
+    transition: transform 0.2s;
+  }
+
+  .faq-question.active i {
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    padding: 0 1.25rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+
+  .faq-answer.active {
+    padding: 0 1.25rem 1.25rem;
+    max-height: 300px;
+  }
+
+  .faq-answer p {
+    color: #475569;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .message-container {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .message-success {
+    background: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+  }
+
+  .message-error {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+  }
+</style>
+
+<script>
+  //  document.addEventListener('DOMContentLoaded', function() {
+
+  // Handle form submission
+  //  const contactForm = document.getElementById('contactForm');
+  // if (contactForm) {
+  //   contactForm.addEventListener('submit', function(e) {
+  //     e.preventDefault();
+  //     const name = document.getElementById('name').value;
+  //     const email = document.getElementById('email').value;
+  //     const message = document.getElementById('message').value;
+  //     const recipientEmail = 'sethsyd32@gmail.com'; // Replace with the recipient's email
+
+  //     const mailtoLink = `mailto:${recipientEmail}?subject=Message from ${name}&body=Name: ${name}%0AEmail: ${email}%0AMessage: ${message}`;
+  //     window.location.href = mailtoLink;
+  //   });
+  // }
+
+  // // FAQ Accordion functionality
+  // const faqQuestions = document.querySelectorAll('.faq-question');
+  // faqQuestions.forEach(question => {
+  //   question.addEventListener('click', () => {
+  //     const answer = question.nextElementSibling;
+  //     question.classList.toggle('active');
+  //     answer.classList.toggle('active');
+  //   });
+  // });
+  // });
+</script>
+
+<script>
+  // Wait for the DOM content to be fully loaded before executing the script
+  document.addEventListener("DOMContentLoaded", function () {
+    const messageContainer = form.querySelector(".message-container");
+
+    // Handle form submission
+    const contactForm = document.getElementById("contactForm");
+    if (contactForm) {
+      // Add an event listener to the contact form's submit event
+      contactForm.addEventListener("submit", function (e) {
+        // Prevent the default form submission behavior
+        e.preventDefault();
+
+        // Get the form data and convert it to a JavaScript object
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        // Send a POST request to the /mailing/send-email endpoint
+        fetch("/mailing/send-email", {
+          // Specify the request method as POST
+          method: "POST",
+          // Specify the headers for the request
+          headers: {
+            // Specify the content type as JSON
+            "Content-Type": "application/json",
+          },
+          // Convert the form data to a JSON string
+          body: JSON.stringify(data),
+        })
+          // Parse the response as JSON
+          .then((response) => response.json())
+          // Handle the response data
+          .then((data) => {
+            // Display a success message
+
+            messageContainer.textContent =
+              '<%= "Thank you for your message! We will get back to you soon." %>';
+            messageContainer.className = "message-container message-success";
+            messageContainer.style.display = "block";
+            // Reset the form
+            this.reset();
+          })
+          // Catch any errors that occur during the request
+          .catch((error) => {
+            // Log the error to the console
+            console.error("Error:", error);
+            // Display an error message
+
+            messageContainer.textContent =
+              "Error sending message. Please try again later.";
+            messageContainer.className = "message-container message-error";
+            messageContainer.style.display = "block";
+          });
+      });
+    }
+
+    // FAQ Accordion functionality
+    // Get all elements with the class faq-question
+    const faqQuestions = document.querySelectorAll(".faq-question");
+    // Iterate over each FAQ question element
+    faqQuestions.forEach((question) => {
+      // Add an event listener to the question element's click event
+      question.addEventListener("click", () => {
+        // Get the answer element (the next sibling of the question element)
+        const answer = question.nextElementSibling;
+        // Toggle the active class on the question and answer elements
+        question.classList.toggle("active");
+        answer.classList.toggle("active");
+      });
+    });
+  });
+</script>

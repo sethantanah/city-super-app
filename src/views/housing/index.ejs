@@ -1,0 +1,331 @@
+<div class="rental-hero">
+    <div class="hero-content">
+      <!-- Logo & Header -->
+      <div class="logo-container">
+        <i data-feather="home" class="main-icon"></i>
+        <h1>Rent<span class="highlight">Ease</span></h1>
+      </div>
+      
+      <p class="tagline">Find your perfect rental home—stress-free</p>
+      
+      <!-- Key Value Propositions -->
+      <div class="value-props">
+        <div class="value-prop">
+          <i data-feather="search"></i>
+          <h3>Smart Search</h3>
+          <p>Filter by price, location, and amenities</p>
+        </div>
+        <div class="value-prop">
+          <i data-feather="shield"></i>
+          <h3>Verified Listings</h3>
+          <p>No scams—only real, available properties</p>
+        </div>
+        <div class="value-prop">
+          <i data-feather="dollar-sign"></i>
+          <h3>No Hidden Fees</h3>
+          <p>Transparent pricing with no surprises</p>
+        </div>
+      </div>
+      
+      <!-- Property Type Showcase -->
+      <div class="property-types">
+        <div class="property-card">
+          <i data-feather="apartment"></i>
+          <span>Apartments</span>
+        </div>
+        <div class="property-card">
+          <i data-feather="house"></i>
+          <span>Houses</span>
+        </div>
+        <div class="property-card">
+          <i data-feather="briefcase"></i>
+          <span>Offices</span>
+        </div>
+        <div class="property-card">
+          <i data-feather="key"></i>
+          <span>Short-Term</span>
+        </div>
+      </div>
+      
+      <!-- Dual CTA (Renters & Landlords) -->
+      <div class="dual-cta">
+        <div class="cta-box renter-cta">
+          <h3>Looking to Rent?</h3>
+          <p>Find your dream home today</p>
+          <button class="cta-button">Browse Listings</button>
+        </div>
+        <div class="cta-box landlord-cta">
+          <h3>Have a Property?</h3>
+          <p>List it and find tenants fast</p>
+          <button class="cta-button">List Your Space</button>
+        </div>
+      </div>
+      
+      <!-- Coming Soon Section (Waitlist & Social) -->
+      <div class="coming-soon-section">
+        <h2>Launching Soon in Your City</h2>
+        <p>Join our early access list for exclusive benefits</p>
+        
+        <div class="components-container">
+          <!-- Waitlist Form -->
+          <div class="">
+            <h3>Get Early Access</h3>
+            <%- include('../components/email-notify-form', { 
+                indent: 'rental-waitlist', 
+                placeholder: 'Enter your email',
+                buttonText: 'Join Waitlist',
+                successMessage: "You're in! We'll notify you when we launch."
+              }); %>
+          </div>
+          
+          <!-- Social Links -->
+          <div class="component-card">
+            <h3>Follow Us</h3>
+            <%- include('../components/social-links'); %>
+            <p class="community-text">Be the first to know about new listings</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Styles -->
+  <style>
+    .rental-hero {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      padding: 2rem;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #0c4a6e;
+    }
+    
+    .hero-content {
+      text-align: center;
+      max-width: 1200px;
+      width: 100%;
+    }
+    
+    .logo-container {
+      margin-bottom: 1.5rem;
+    }
+    
+    .main-icon {
+      width: 60px;
+      height: 60px;
+      stroke: #0369a1;
+      stroke-width: 2;
+      margin-bottom: 1rem;
+    }
+    
+    h1 {
+      font-size: 3.5rem;
+      margin: 0;
+      font-weight: 800;
+    }
+    
+    .highlight {
+      color: #0369a1;
+    }
+    
+    .tagline {
+      font-size: 1.5rem;
+      color: #0c4a6e;
+      margin-bottom: 3rem;
+      font-weight: 500;
+    }
+    
+    .value-props {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .value-prop {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      max-width: 280px;
+      transition: transform 0.3s ease;
+    }
+    
+    .value-prop:hover {
+      transform: translateY(-5px);
+    }
+    
+    .value-prop i {
+      width: 40px;
+      height: 40px;
+      stroke: #0369a1;
+      margin-bottom: 1rem;
+    }
+    
+    .value-prop h3 {
+      margin: 0.5rem 0;
+      color: #075985;
+    }
+    
+    .value-prop p {
+      color: #0c4a6e;
+      line-height: 1.6;
+      margin: 0;
+    }
+    
+    .property-types {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .property-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+      min-width: 120px;
+    }
+    
+    .property-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .property-card i {
+      width: 24px;
+      height: 24px;
+      stroke: #0369a1;
+    }
+    
+    .property-card span {
+      font-weight: 500;
+      color: #0c4a6e;
+    }
+    
+    .dual-cta {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .cta-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      width: 280px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .cta-box h3 {
+      color: #075985;
+      margin-top: 0;
+    }
+    
+    .cta-box p {
+      color: #0c4a6e;
+      margin-bottom: 1.5rem;
+    }
+    
+    .cta-button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      width: 100%;
+      border: none;
+      transition: all 0.2s;
+    }
+    
+    .renter-cta .cta-button {
+      background: #0369a1;
+      color: white;
+    }
+    
+    .renter-cta .cta-button:hover {
+      background: #075985;
+    }
+    
+    .landlord-cta .cta-button {
+      background: white;
+      color: #0369a1;
+      border: 1px solid #0369a1;
+    }
+    
+    .landlord-cta .cta-button:hover {
+      background: #f0f9ff;
+    }
+    
+    .coming-soon-section {
+      background: white;
+      padding: 3rem;
+      border-radius: 16px;
+      max-width: 800px;
+      margin: 2rem auto 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .coming-soon-section h2 {
+      color: #075985;
+      margin-top: 0;
+    }
+    
+    .coming-soon-section p {
+      color: #0c4a6e;
+      margin-bottom: 2rem;
+    }
+    
+    .components-container {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .component-card {
+      background: #f8fafc;
+      padding: 2rem;
+      border-radius: 12px;
+      flex: 1;
+      min-width: 300px;
+      border: 1px solid #e0f2fe;
+    }
+    
+    .component-card h3 {
+      color: #075985;
+      margin-top: 0;
+    }
+    
+    .community-text {
+      margin-top: 1.5rem;
+      color: #0c4a6e;
+      font-style: italic;
+    }
+  </style>
+  
+  <!-- Scripts -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize Feather icons
+      feather.replace();
+      
+      // Animate property cards on load
+      const propertyCards = document.querySelectorAll('.property-card');
+      propertyCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.classList.add('fade-in-up');
+      });
+    });
+  </script>

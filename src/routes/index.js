@@ -21,15 +21,15 @@ router.get('/', async (req, res) => {
         color: 'bg-blue-500'
       },
       { 
-        id: 'billboards', 
-        name: 'Billboard Market', 
+        id: 'adverts', 
+        name: 'Advertising Market', 
         description: 'Advertise or find local advertisements',
         icon: 'megaphone',
         color: 'bg-yellow-500'
       },
       { 
-        id: 'thrift', 
-        name: 'Thrift Store', 
+        id: 'market', 
+        name: 'Market Place', 
         description: 'Buy and sell second-hand items at great prices',
         icon: 'shopping-bag',
         color: 'bg-green-500'

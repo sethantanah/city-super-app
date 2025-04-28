@@ -1,0 +1,55 @@
+
+<div class="container mx-auto px-4 py-8 bg-gradient-to-br from-gray-50 to-red-50 min-h-screen">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold text-gray-800 tracking-tight">Delete Job</h1>
+    <a href="/admin/jobs" class="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors duration-300 shadow-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Back to Jobs
+    </a>
+  </div>
+
+  <!-- Delete Card -->
+  <div class="bg-white rounded-2xl shadow-xl p-8 max-w-3xl mx-auto border border-gray-100">
+    <!-- Warning Alert -->
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-6 rounded-lg mb-8">
+      <h4 class="text-lg font-semibold mb-2">Warning!</h4>
+      <p class="text-sm">You are about to delete the following job. This action cannot be undone. Please review the details below before proceeding.</p>
+    </div>
+
+    <!-- Job Details -->
+    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8">
+      <h5 class="text-xl font-bold text-gray-800 mb-2"><%= job.title %></h5>
+      <h6 class="text-md font-medium text-gray-500 mb-4"><%= job.company %></h6>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-700">
+        <p><strong>Location:</strong> <%= job.location || 'N/A' %></p>
+        <p><strong>Category:</strong> <%= job.category || 'N/A' %></p>
+        <p><strong>Type:</strong> <%= job.type || 'N/A' %></p>
+        <p><strong>Posted:</strong> <%= new Date(job.postedDate).toLocaleDateString() %></p>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <form action="/admin/jobs/delete/<%= job.jobId %>" method="POST">
+      <div class="flex justify-between items-center">
+        <a href="/admin/jobs/edit/<%= job.jobId %>" class="inline-flex items-center px-6 py-3 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors duration-300 shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+          Cancel
+        </a>
+        <button
+          type="submit"
+          class="inline-flex items-center px-6 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors duration-300 shadow-sm"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4M9 7v12m6-12v12" />
+          </svg>
+          Confirm Delete
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

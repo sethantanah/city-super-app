@@ -1,0 +1,134 @@
+<!-- components/custom-select.ejs -->
+<div class="custom-select relative w-full">
+    <!-- Hidden native select -->
+    <select name="<%= name || 'select' %>" class="sr-only">
+      <% if (placeholder) { %>
+        <option value=""><%= placeholder %></option>
+      <% } %>
+      <% options.forEach(option => { %>
+        <option 
+          value="<%= option.value %>" 
+          <%= selectedValue === option.value ? 'selected' : '' %>
+        >
+          <%= option.label || option.value %>
+        </option>
+      <% }) %>
+    </select>
+  
+    <!-- Custom select trigger -->
+    <div class="custom-select-trigger flex items-center justify-between w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-gray-300 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-150 cursor-pointer">
+      <div class="flex items-center truncate">
+        <% if (icon) { %>
+          <div class="absolute left-4 text-gray-500">
+            <%- include(`../icons/${icon}`) %>
+          </div>
+        <% } %>
+        <span class="selected-value text-gray-800">
+          <%= selectedValue ? options.find(o => o.value === selectedValue)?.label || selectedValue : placeholder %>
+        </span>
+      </div>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transform transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+  
+    <!-- Custom dropdown -->
+    <div class="custom-select-dropdown absolute z-20 w-full mt-1 max-h-60 overflow-auto rounded-xl bg-white shadow-lg border border-gray-200 hidden">
+      <% if (placeholder) { %>
+        <div class="option px-4 py-3 hover:bg-gray-50 cursor-pointer <%= !selectedValue ? 'bg-blue-50 text-blue-600' : 'text-gray-800' %>" data-value="">
+          <%= placeholder %>
+        </div>
+      <% } %>
+      <% options.forEach(option => { %>
+        <div class="option px-4 py-3 hover:bg-gray-50 cursor-pointer <%= selectedValue === option.value ? 'bg-blue-50 text-blue-600' : 'text-gray-800' %>" data-value="<%= option.value %>">
+          <%= option.label || option.value %>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.custom-select').forEach(select => {
+        const nativeSelect = select.querySelector('select');
+        const trigger = select.querySelector('.custom-select-trigger');
+        const dropdown = select.querySelector('.custom-select-dropdown');
+        const selectedValue = select.querySelector('.selected-value');
+        const options = select.querySelectorAll('.option');
+    
+        // Check if all required elements exist
+        if (!nativeSelect || !trigger || !dropdown || !selectedValue || options.length === 0) {
+          console.warn('Custom select component missing required elements', select);
+          return;
+        }
+    
+        // Toggle dropdown
+        trigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpen = !dropdown.classList.contains('hidden');
+          
+          // Close all other selects
+          document.querySelectorAll('.custom-select-dropdown').forEach(d => {
+            if (d !== dropdown) d.classList.add('hidden');
+          });
+          
+          dropdown.classList.toggle('hidden');
+          const chevron = trigger.querySelector('svg');
+          if (chevron) chevron.classList.toggle('rotate-180');
+        });
+    
+        // Select option
+        options.forEach(option => {
+          option.addEventListener('click', () => {
+            const value = option.dataset.value;
+            const displayText = option.textContent;
+            
+            selectedValue.textContent = displayText;
+            nativeSelect.value = value;
+            
+            // Update selected styles
+            options.forEach(opt => {
+              const isSelected = opt.dataset.value === value;
+              opt.classList.toggle('bg-blue-50', isSelected);
+              opt.classList.toggle('text-blue-600', isSelected);
+              opt.classList.toggle('text-gray-800', !isSelected);
+            });
+            
+            dropdown.classList.add('hidden');
+            const chevron = trigger.querySelector('svg');
+            if (chevron) chevron.classList.remove('rotate-180');
+            
+            // Dispatch change event
+            nativeSelect.dispatchEvent(new Event('change'));
+          });
+        });
+    
+        // Close when clicking outside
+        document.addEventListener('click', () => {
+          dropdown.classList.add('hidden');
+          const chevron = trigger.querySelector('svg');
+          if (chevron) chevron.classList.remove('rotate-180');
+        });
+      });
+    });
+    </script>
+  
+  <style>
+  .custom-select-dropdown::-webkit-scrollbar {
+    width: 8px;
+  }
+  .custom-select-dropdown::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 0 8px 8px 0;
+  }
+  .custom-select-dropdown::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 8px;
+  }
+  .custom-select-dropdown::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
+  }
+  .rotate-180 {
+    transform: rotate(180deg);
+  }
+  </style>

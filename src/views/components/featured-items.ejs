@@ -1,31 +1,56 @@
-<!-- Featured Items Component -->
-<div class="mb-12">
-    <div class="flex justify-between items-center mb-6">
-      <h2 class="text-2xl font-bold"><%= title || 'Featured in Your Area' %></h2>
-      <% if (viewAllLink) { %>
-        <a href="<%= viewAllLink %>" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
-          View All
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline ml-1" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-          </svg>
-        </a>
-      <% } %>
-    </div>
+<!-- Featured Items Component - Redesigned -->
+<section class="mb-16">
+  <div class="flex justify-between items-center mb-8">
+    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 relative">
+      <%= title || 'Featured in Your Area' %>
+      <span class="absolute -bottom-2 left-0 w-16 h-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"></span>
+    </h2>
     
-    <div class="grid grid-cols-1 md:grid-cols-<%= columns || 3 %> gap-6">
-      <% if (items && items.length > 0) { %>
-        <% items.forEach(item => { %>
-          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-            <div class="h-2 bg-<%= item.color %>-500"></div>
+    <% if (viewAllLink) { %>
+      <a href="<%= viewAllLink %>" class="group flex items-center text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors">
+        <span>View All</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </a>
+    <% } %>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-<%= columns || 3 %> gap-6 lg:gap-8">
+    <% if (items && items.length > 0) { %>
+      <% items.forEach(item => { %>
+        <div class="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full transform hover:-translate-y-1">
+          <!-- Color accent and image -->
+          <div class="relative">
+            <div class="absolute inset-0 bg-gradient-to-r from-<%= item.color %>-500 to-<%= item.color %>-600 opacity-90 z-10"></div>
             
             <% if (item.imageUrl) { %>
-              <img src="<%= item.imageUrl %>" alt="<%= item.title %>" class="w-full h-40 object-cover">
+              <img src="<%= item.imageUrl %>" alt="<%= item.title %>" class="w-full h-48 object-cover">
+            <% } else { %>
+              <div class="w-full h-32 bg-gradient-to-br from-<%= item.color %>-500 to-<%= item.color %>-700 flex items-center justify-center">
+                <% if (item.icon) { %>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white opacity-75" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <% if (item.icon === 'briefcase') { %>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    <% } else if (item.icon === 'shopping-bag') { %>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    <% } else if (item.icon === 'calendar') { %>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    <% } else if (item.icon === 'home') { %>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    <% } else { %>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <% } %>
+                  </svg>
+                <% } %>
+              </div>
             <% } %>
             
-            <div class="p-6">
-              <div class="flex items-center mb-4">
+            <!-- Category badge -->
+            <div class="absolute top-4 left-4 z-20 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full shadow-sm">
+              <div class="flex items-center">
                 <% if (item.icon) { %>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-<%= item.color %>-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-<%= item.color %>-600 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <% if (item.icon === 'briefcase') { %>
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     <% } else if (item.icon === 'shopping-bag') { %>
@@ -39,26 +64,40 @@
                     <% } %>
                   </svg>
                 <% } %>
-                <span class="text-sm font-medium text-<%= item.color %>-500"><%= item.type %></span>
+                <span class="text-xs font-semibold text-<%= item.color %>-600"><%= item.type %></span>
               </div>
-              
-              <h3 class="text-lg font-semibold mb-2"><%= item.title %></h3>
-              <p class="text-gray-600 text-sm mb-4"><%= item.subtitle %></p>
-              
-              <a href="<%= item.link %>" class="text-<%= item.color %>-500 hover:underline text-sm">
-                View Details →
-              </a>
             </div>
           </div>
-        <% }) %>
-      <% } else { %>
-        <div class="md:col-span-<%= columns || 3 %> p-8 bg-gray-50 rounded-lg text-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <p class="text-gray-600">No featured items available at this time.</p>
+          
+          <!-- Content -->
+          <div class="p-6 flex-grow flex flex-col">
+            <h3 class="text-lg font-bold text-gray-800 mb-2 group-hover:text-<%= item.color %>-600 transition-colors">
+              <%= item.title %>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-6 flex-grow">
+              <%= item.subtitle %>
+            </p>
+            
+            <a href="<%= item.link %>" class="mt-auto inline-flex items-center text-<%= item.color %>-600 hover:text-<%= item.color %>-800 font-medium text-sm group-hover:underline">
+              View Details
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </div>
         </div>
-      <% } %>
-    </div>
+      <% }) %>
+    <% } else { %>
+      <div class="md:col-span-<%= columns || 3 %> p-10 bg-gray-50 rounded-xl text-center">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-medium text-gray-800 mb-2">No featured items available</h3>
+        <p class="text-gray-500">Check back soon for new featured content in your area.</p>
+      </div>
+    <% } %>
   </div>
-  
+</section>

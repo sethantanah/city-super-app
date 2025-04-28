@@ -14,7 +14,7 @@ async function getAllFeaturedItems(limit = 1) {
     const featuredJobs = await getFeaturedJobs(limit);
     
     // Mock data for marketplace and events until those services are implemented
-    const featuredMarketplace = [
+    // const featuredMarketplace = [
     //   {
     //     id: 'market1',
     //     title: 'Vintage Leather Chair',
@@ -25,9 +25,9 @@ async function getAllFeaturedItems(limit = 1) {
     //     icon: 'shopping-bag',
     //     link: '/thrift/market1'
     //   }
-    ];
+    // ];
     
-    const featuredEvents = [
+    // const featuredEvents = [
     //   {
     //     id: 'event1',
     //     title: 'Community Festival',
@@ -38,7 +38,7 @@ async function getAllFeaturedItems(limit = 1) {
     //     icon: 'calendar',
     //     link: '/events/event1'
     //   }
-    ];
+    // ];
     
     // Transform job data to match the component format
     const formattedJobs = featuredJobs.map(job => ({
@@ -48,14 +48,14 @@ async function getAllFeaturedItems(limit = 1) {
       type: 'Job',
       color: 'blue',
       icon: 'briefcase',
-      link: `/jobs/${job.id}`
+      link: `/jobs/details/${job.id}`
     }));
     
     // Combine all featured items
     const allFeatured = [
       ...formattedJobs,
-      ...featuredMarketplace,
-      ...featuredEvents
+      // ...featuredMarketplace,
+      // ...featuredEvents
     ];
     
     return allFeatured;

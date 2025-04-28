@@ -1,0 +1,324 @@
+<div class="services-hero">
+    <div class="hero-content">
+      <div class="logo-container">
+        <i data-feather="briefcase" class="main-icon"></i>
+        <h1>Service<span class="highlight">Hub</span></h1>
+      </div>
+      
+      <p class="tagline">Connecting skilled professionals with those who need them</p>
+      
+      <div class="value-props">
+        <div class="value-prop">
+          <i data-feather="zap"></i>
+          <h3>Quick Matching</h3>
+          <p>Find the perfect service provider in minutes</p>
+        </div>
+        <div class="value-prop">
+          <i data-feather="shield"></i>
+          <h3>Verified Pros</h3>
+          <p>All providers are vetted and reviewed</p>
+        </div>
+        <div class="value-prop">
+          <i data-feather="credit-card"></i>
+          <h3>Secure Payments</h3>
+          <p>Hassle-free transactions with protection</p>
+        </div>
+      </div>
+      
+      <div class="service-categories">
+        <div class="service-tag">
+          <i data-feather="scissors"></i>
+          <span>Beauty</span>
+        </div>
+        <div class="service-tag">
+          <i data-feather="home"></i>
+          <span>Home Services</span>
+        </div>
+        <div class="service-tag">
+          <i data-feather="code"></i>
+          <span>Tech Services</span>
+        </div>
+        <div class="service-tag">
+          <i data-feather="book"></i>
+          <span>Tutoring</span>
+        </div>
+        <div class="service-tag">
+          <i data-feather="tool"></i>
+          <span>Repairs</span>
+        </div>
+      </div>
+      
+      <div class="dual-cta">
+        <div class="cta-box">
+          <h3>Need a service?</h3>
+          <p>Find skilled professionals in your area</p>
+          <button class="cta-button client-cta">Browse Services</button>
+        </div>
+        <div class="cta-box">
+          <h3>Offer a service?</h3>
+          <p>Join our network of professionals</p>
+          <button class="cta-button provider-cta">List Your Service</button>
+        </div>
+      </div>
+      
+      <div class="coming-soon-section">
+        <h2>Launching Soon</h2>
+        <p>We're building the most trusted services marketplace in your community</p>
+        
+        <div class="components-container">
+          <div class="">
+            <h3>Get Early Access</h3>
+            <%- include('../components/email-notify-form', { 
+                indent: 'services-waiting-list', 
+                placeholder: 'Your email address',
+                buttonText: 'Join Waitlist',
+                successMessage: "You're on the list! We'll notify you when we launch."
+              }); %>
+          </div>
+          
+          <div class="component-card">
+            <h3>Connect With Us</h3>
+            <%- include('../components/social-links'); %>
+            <p class="community-text">Join our professional community</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <style>
+    .services-hero {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      padding: 2rem;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1a202c;
+    }
+    
+    .hero-content {
+      text-align: center;
+      max-width: 1200px;
+      width: 100%;
+    }
+    
+    .logo-container {
+      margin-bottom: 1.5rem;
+    }
+    
+    .main-icon {
+      width: 60px;
+      height: 60px;
+      stroke: #4a6bda;
+      stroke-width: 2;
+      margin-bottom: 1rem;
+    }
+    
+    h1 {
+      font-size: 3.5rem;
+      margin: 0;
+      font-weight: 800;
+    }
+    
+    .highlight {
+      color: #4a6bda;
+    }
+    
+    .tagline {
+      font-size: 1.5rem;
+      color: #4a5568;
+      margin-bottom: 3rem;
+      font-weight: 400;
+    }
+    
+    .value-props {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .value-prop {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      max-width: 280px;
+      transition: all 0.3s ease;
+    }
+    
+    .value-prop:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .value-prop i {
+      width: 40px;
+      height: 40px;
+      stroke: #4a6bda;
+      margin-bottom: 1rem;
+    }
+    
+    .value-prop h3 {
+      margin: 0.5rem 0;
+      color: #2d3748;
+    }
+    
+    .value-prop p {
+      color: #4a5568;
+      line-height: 1.6;
+      margin: 0;
+      opacity: 0.9;
+    }
+    
+    .service-categories {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .service-tag {
+      background: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .service-tag:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-color: #cbd5e0;
+    }
+    
+    .service-tag i {
+      width: 18px;
+      height: 18px;
+      stroke: #4a6bda;
+    }
+    
+    .dual-cta {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .cta-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      width: 280px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .cta-box h3 {
+      color: #2d3748;
+      margin-top: 0;
+    }
+    
+    .cta-box p {
+      color: #4a5568;
+      margin-bottom: 1.5rem;
+    }
+    
+    .cta-button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      width: 100%;
+      border: none;
+      transition: all 0.2s;
+    }
+    
+    .client-cta {
+      background: #4a6bda;
+      color: white;
+    }
+    
+    .client-cta:hover {
+      background: #3b5bca;
+    }
+    
+    .provider-cta {
+      background: white;
+      color: #4a6bda;
+      border: 1px solid #4a6bda;
+    }
+    
+    .provider-cta:hover {
+      background: #f7fafc;
+    }
+    
+    .coming-soon-section {
+      background: white;
+      padding: 3rem;
+      border-radius: 16px;
+      max-width: 800px;
+      margin: 2rem auto 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .coming-soon-section h2 {
+      color: #2d3748;
+      margin-top: 0;
+    }
+    
+    .coming-soon-section p {
+      color: #4a5568;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    .components-container {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .component-card {
+      background: #f8fafc;
+      padding: 2rem;
+      border-radius: 12px;
+      flex: 1;
+      min-width: 300px;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .component-card h3 {
+      color: #2d3748;
+      margin-top: 0;
+    }
+    
+    .community-text {
+      margin-top: 1.5rem;
+      color: #4a5568;
+      font-style: italic;
+      opacity: 0.8;
+    }
+  </style>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    
+      // Add animation to service tags
+      const tags = document.querySelectorAll('.service-tag');
+      tags.forEach((tag, index) => {
+        tag.style.animationDelay = `${index * 0.1}s`;
+        tag.classList.add('float-in');
+      });
+    });
+  </script>
