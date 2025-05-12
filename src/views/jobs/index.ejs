@@ -1,102 +1,117 @@
-
 <%- include('job-search') %>
-  
-  <div class="container mx-auto px-4 py-12">
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-      <div>
-        <h2 class="text-3xl font-bold text-gray-900">
-          <% if (locals.query || locals.category || locals.type || locals.location) { %>
-            Search Results
-          <% } else { %>
-            Job Listings
-          <% } %>
-        </h2>
-        <% if (locals.jobs && jobs.length > 0) { %>
-          <p class="text-gray-500 mt-2"><%= jobs.length %> <%= jobs.length === 1 ? 'job' : 'jobs' %> found</p>
+
+<div class="container mx-auto px-4 py-12">
+  <!-- Main Header -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+    <div>
+      <h2 class="text-3xl font-bold text-gray-900">
+        <% if (locals.query || locals.category || locals.type || locals.location) { %>
+          Search Results
+        <% } else { %>
+          Job Listings
         <% } %>
-      </div>
-      <a href="/jobs/post-job" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-medium transition-all duration-200 hover:shadow-lg flex items-center whitespace-nowrap">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-        </svg>
-        Post a Job
-      </a>
+      </h2>
+      <% if (locals.jobs && jobs.length > 0) { %>
+        <p class="text-gray-500 mt-2"><%= jobs.length %> <%= jobs.length === 1 ? 'job' : 'jobs' %> found</p>
+      <% } %>
     </div>
-    
-    <% if (locals.jobs && jobs.length > 0) { %>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <% jobs.forEach(job => { %>
-          <a href="/jobs/details/<%= job._id %>" class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-6 block border border-gray-100 hover:border-indigo-100 flex flex-col h-full">
-            <div class="flex items-start gap-4 mb-4">
-              <div class="w-12 h-12 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <% if (job.companyLogo) { %>
-                  <img src="<%= job.companyLogo %>" alt="<%= job.company %> logo" class="w-10 h-10 object-contain">
-                <% } else { %>
-                  <span class="text-xl font-bold text-indigo-600"><%= job.company.charAt(0) %></span>
-                <% } %>
-              </div>
-              
-              <div>
-                <div class="flex items-center gap-2 mb-1">
-                  <h3 class="text-lg font-semibold text-gray-900"><%= job.title %></h3>
-                  <% if (job.featured) { %>
-                    <span class="px-2 py-0.5 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded-full">Featured</span>
-                  <% } %>
-                </div>
-                <div class="text-gray-700 text-sm"><%= job.company %></div>
-              </div>
-            </div>
-            
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">
-                <%= job.type %>
-              </span>
-              <span class="px-2.5 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-medium">
-                <%= job.category %>
-              </span>
-              <% if (job.remote) { %>
-                <span class="px-2.5 py-1 bg-green-50 text-green-700 rounded-full text-xs font-medium">
-                  Remote
-                </span>
-              <% } %>
-            </div>
-            
-            <div class="flex items-center text-gray-500 text-sm mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <%= job.location %>
-            </div>
-            
-            <p class="text-gray-600 text-sm mb-5 line-clamp-2 flex-grow">
-              <%= job.description.substring(0, 120) %>...
-            </p>
-            
-            <div class="mt-auto flex justify-between items-center">
-              <div class="text-sm text-gray-500">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                Posted <%= new Date(job.postedDate).toLocaleDateString() %>
-              </div>
-              <div class="text-blue-600 font-medium text-sm">
-                <%= job.salary %>
-              </div>
-            </div>
-          </a>
+    <a href="/jobs/post-job" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-medium transition-all duration-200 hover:shadow-lg flex items-center whitespace-nowrap">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+      </svg>
+      Post a Job
+    </a>
+  </div>
+
+  <!-- Local Jobs Section -->
+  <% if (localJobs && localJobs.length > 0) { %>
+    <div class="mb-12">
+      <div class="flex items-center mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <h3 class="text-xl font-semibold text-gray-900">Jobs Near You</h3>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <% localJobs.forEach(job => { %>
+          <%- include('../components/jobs-card', { job }) %>
         <% }) %>
       </div>
-    <% } else { %>
-      <div class="bg-white rounded-2xl shadow-sm p-12 text-center max-w-2xl mx-auto">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto text-gray-300 mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <h3 class="text-2xl font-medium text-gray-900 mb-3">No jobs found</h3>
-        <p class="text-gray-500 mb-6">Try adjusting your search filters or browse all jobs</p>
-        <a href="/jobs" class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors duration-200">
-          Browse All Jobs
-        </a>
+    </div>
+  <% } %>
+
+  <!-- All Jobs Section -->
+  <% if (locals.jobs && jobs.length > 0) { %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      <% jobs.forEach(job => { %>
+        <%- include('../components/jobs-card', { job }) %>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="bg-white rounded-2xl shadow-sm p-12 text-center max-w-2xl mx-auto">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto text-gray-300 mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <h3 class="text-2xl font-medium text-gray-900 mb-3">No jobs found</h3>
+      <p class="text-gray-500 mb-6">Try adjusting your search filters or browse all jobs</p>
+      <a href="/jobs" class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors duration-200">
+        Browse All Jobs
+      </a>
+    </div>
+  <% } %>
+
+  <!-- Pagination -->
+  <% if (pagination && pagination.totalPages > 1) { %>
+    <div class="flex items-center justify-between border-t border-gray-200 pt-6">
+      <div class="flex-1 flex justify-between sm:hidden">
+        <% if (pagination.hasPrevPage) { %>
+          <a href="?page=<%= pagination.prevPage %>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+            Previous
+          </a>
+        <% } %>
+        <% if (pagination.hasNextPage) { %>
+          <a href="?page=<%= pagination.nextPage %>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+            Next
+          </a>
+        <% } %>
       </div>
-    <% } %>
-  </div>
+      <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+        <div>
+          <p class="text-sm text-gray-700">
+            Showing <span class="font-medium"><%= (pagination.currentPage - 1) * 10 + 1 %></span>
+            to <span class="font-medium"><%= Math.min(pagination.currentPage * 10, jobs.length) %></span>
+            of <span class="font-medium"><%= jobs.length %></span> results
+          </p>
+        </div>
+        <div>
+          <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+            <% if (pagination.hasPrevPage) { %>
+              <a href="?page=<%= pagination.prevPage %>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <span class="sr-only">Previous</span>
+                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            <% } %>
+
+            <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+              <a href="?page=<%= i %>" class="relative inline-flex items-center px-4 py-2 border <%= i === pagination.currentPage ? 'border-indigo-500 bg-indigo-50 text-indigo-600' : 'border-gray-300 bg-white text-gray-500 hover:bg-gray-50' %> text-sm font-medium">
+                <%= i %>
+              </a>
+            <% } %>
+
+            <% if (pagination.hasNextPage) { %>
+              <a href="?page=<%= pagination.nextPage %>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <span class="sr-only">Next</span>
+                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            <% } %>
+          </nav>
+        </div>
+      </div>
+    </div>
+  <% } %>
+</div>

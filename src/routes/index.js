@@ -62,7 +62,8 @@ router.get('/', async (req, res) => {
       activeTab: 'home',
       featuredItems,
       featuredJobs,
-      services
+      services,
+      apiKey: process.env.OPENCAGE_API_KEY
     });
   } catch (error) {
     console.error('Error in home route:', error);

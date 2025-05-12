@@ -5,7 +5,8 @@ const router = express.Router();
 router.get('/', (req, res) => {
   res.render('services/index', { 
     title: 'Local Services - City',
-    items: [] // This will be populated from the spreadsheet later
+    items: [],
+    apiKey: process.env.OPENCAGE_API_KEY // This will be populated from the spreadsheet later
   });
 });
 

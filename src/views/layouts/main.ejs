@@ -13,27 +13,40 @@
     />
     <script src="https://unpkg.com/feather-icons"></script>
 
+    <script type="module">
+      import { getLocationInfo } from "/scripts/location.js";
+      const apiKey = "<%= apiKey %>";
+      getLocationInfo(apiKey);
+    </script>
 
-      
-  <style>
-    /* Custom font family for markdown */
-    .prose {
-      font-family: 'Inter', sans-serif;
-    }
-    
-    /* Optional: Custom heading sizes */
-    .prose h1 {
-      font-size: 1.2rem;
-      font-weight: 700;
-    }
-    .prose h2 {
-      font-size: 1rem;
-      font-weight: 500;
-    }
-  </style>
+    <style>
+      /* Custom font family for markdown */
+      .prose {
+        font-family: "Inter", sans-serif;
+      }
 
+      /* Optional: Custom heading sizes */
+      .prose h1 {
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+      .prose h2 {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+    </style>
   </head>
   <body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Location Mini Header -->
+    <div class="w-full bg-gray-800 text-gray-300 text-sm flex items-center justify-center px-4 py-2 space-x-2">
+      <i data-feather="map-pin" class="w-4 h-4 ml-auto text-gray-400"></i>
+
+       <a
+          href="/news"
+      <span id="location-output">Detecting location...</span>
+    </a>
+    </div>
+
     <!-- Header -->
     <header class="bg-gray-900 text-white sticky top-0 z-50 shadow-lg">
       <div class="container mx-auto px-4">
@@ -136,7 +149,7 @@
         </div>
 
         <!-- Mobile Navigation (Hidden by default) -->
-        <div class="md:hidden hidden bg-gray-800 pb-4 px-4">
+        <div class="md:hidden hidden pb-4 px-4">
           <ul class="flex flex-col space-y-3">
             <li>
               <a
@@ -226,16 +239,26 @@
             <h4 class="font-semibold mb-4">Company</h4>
             <ul class="space-y-2">
               <li>
-                <a href="/city/about-us" class="text-gray-400 hover:text-white">About Us</a>
+                <a href="/city/about-us" class="text-gray-400 hover:text-white"
+                  >About Us</a
+                >
               </li>
               <li>
-                <a href="/city/contact-us" class="text-gray-400 hover:text-white">Careers</a>
+                <a
+                  href="/city/contact-us"
+                  class="text-gray-400 hover:text-white"
+                  >Careers</a
+                >
               </li>
               <li>
-                <a href="/city/blog" class="text-gray-400 hover:text-white">Blog</a>
+                <a href="/city/blog" class="text-gray-400 hover:text-white"
+                  >Blog</a
+                >
               </li>
               <li>
-                <a href="/city/blog" class="text-gray-400 hover:text-white">Press</a>
+                <a href="/city/blog" class="text-gray-400 hover:text-white"
+                  >Press</a
+                >
               </li>
             </ul>
           </div>
@@ -314,26 +337,22 @@
       });
     </script>
 
-
-
     <script type="module">
       import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
-      
+
       // Configure marked
       marked.setOptions({
-        breaks: true,       // Convert \n to <br>
-        gfm: false,          // GitHub Flavored Markdown
-        headerIds: false,   // Disable auto header IDs
-        smartypants: true   // Fancy quotes, dashes etc.
+        breaks: true, // Convert \n to <br>
+        gfm: false, // GitHub Flavored Markdown
+        headerIds: false, // Disable auto header IDs
+        smartypants: true, // Fancy quotes, dashes etc.
       });
-    
+
       document.querySelectorAll(".markdown-content").forEach((el) => {
         el.innerHTML = marked.parse(el.textContent.trim());
       });
     </script>
 
-    <style>
-   
-    </style>
+    <style></style>
   </body>
 </html>

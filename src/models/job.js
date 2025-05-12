@@ -47,6 +47,7 @@ const jobSchema = new mongoose.Schema({
 jobSchema.index({
   title: 'text',
   company: 'text',
+  location: 'text',
   description: 'text'
 });
 

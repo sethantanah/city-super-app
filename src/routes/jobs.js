@@ -10,6 +10,8 @@ const {
   getJobStats
 } = require('../services/jobService');
 
+const { getJSON } =  require("../services/storageService"); // Adjust
+
 // Job board home page
 router.get('/', async (req, res) => {
   try {
@@ -22,8 +24,9 @@ router.get('/', async (req, res) => {
     const skip = (page - 1) * limit;
     
     let jobs = [];
+    let localJobs = [];
     let totalJobs = 0;
-    
+
     if (query || category || type || location) {
       // Search with filters
       const filters = { category, type, location, verified: true };
@@ -35,6 +38,13 @@ router.get('/', async (req, res) => {
       const allMatchingJobs = await searchJobs(query, filters);
       totalJobs = allMatchingJobs.length;
     } else {
+      const cached = getJSON("locationData");
+      if (cached) {
+        const { country, state, county } = cached;
+        localJobs = await searchJobs(`${state}`); 
+        console.log(localJobs)
+      }
+
       // Get all verified jobs with pagination
       jobs = await fetchJobs({ 
         limit, 
@@ -71,6 +81,7 @@ router.get('/', async (req, res) => {
     res.render('jobs/index', {
       title: 'Job Board | City Platform',
       jobs,
+      localJobs,
       query,
       category,
       type,
@@ -79,7 +90,8 @@ router.get('/', async (req, res) => {
       jobTypes,
       locations,
       pagination,
-      activeTab: 'jobs'
+      activeTab: 'jobs',
+      apiKey: process.env.OPENCAGE_API_KEY
     });
   } catch (error) {
     console.error('Error in job board route:', error);
@@ -122,7 +134,8 @@ router.get('/details/:id', async (req, res) => {
       title: `${job.title} at ${job.company} | Job Board`,
       job,
       relatedJobs: filteredRelatedJobs,
-      activeTab: 'jobs'
+      activeTab: 'jobs',
+      apiKey: process.env.OPENCAGE_API_KEY
     });
   } catch (error) {
     console.error('Error in job detail route:', error);
@@ -144,7 +157,8 @@ router.get('/post-job', (req, res) => {
       title: 'Post a Job | City Platform',
       categories,
       jobTypes,
-      activeTab: 'jobs'
+      activeTab: 'jobs',
+      apiKey: process.env.OPENCAGE_API_KEY
     });
   }).catch(error => {
     console.error('Error loading job post form:', error);
@@ -180,7 +194,8 @@ router.post('/new', async (req, res) => {
         title: 'Post a Job | City Platform',
         error: 'Title, company, and description are required',
         formData: req.body,
-        activeTab: 'jobs'
+        activeTab: 'jobs',
+        apiKey: process.env.OPENCAGE_API_KEY
       });
     }
     
@@ -219,7 +234,8 @@ router.post('/new', async (req, res) => {
       formData: req.body,
       categories,
       jobTypes,
-      activeTab: 'jobs'
+      activeTab: 'jobs',
+      apiKey: process.env.OPENCAGE_API_KEY
     });
   }
 });
@@ -232,7 +248,8 @@ router.get('/featured', async (req, res) => {
     res.render('jobs/featured', {
       title: 'Featured Jobs | City Platform',
       jobs: featuredJobs,
-      activeTab: 'jobs'
+      activeTab: 'jobs',
+      apiKey: process.env.OPENCAGE_API_KEY
     });
   } catch (error) {
     console.error('Error loading featured jobs:', error);
@@ -253,7 +270,8 @@ router.get('/category/:category', async (req, res) => {
       title: `${category} Jobs | City Platform`,
       category,
       jobs,
-      activeTab: 'jobs'
+      activeTab: 'jobs',
+      apiKey: process.env.OPENCAGE_API_KEY
     });
   } catch (error) {
     console.error('Error loading jobs by category:', error);

@@ -69,28 +69,27 @@
         >
           <span id="fetch-text">Search</span>
           <span id="fetch-spinner">
-          <svg
-            id="fetch-spinner"
-            class="hidden w-4 h-4 ml-1 inline animate-spin"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              class="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              stroke-width="4"
-            ></circle>
-            <path
-              
-              class="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            ></path>
-          </svg>
-        </span>
+            <svg
+              id="fetch-spinner"
+              class="hidden w-4 h-4 ml-1 inline animate-spin"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+          </span>
         </button>
       </div>
     </div>
@@ -300,7 +299,7 @@
                     d="M13 10V3L4 14h7v7l9-11h-7z"
                   ></path>
                 </svg>
-                <span>AI Generated</span>
+                <span>City AI</span>
               </div>
             </div>
           </div>
@@ -348,9 +347,13 @@
   </div>
 </div>
 
-<script>
+<script type="module">
+  import { getLocationInfo } from "/scripts/location.js";
   // public/scripts.js
   document.addEventListener("DOMContentLoaded", () => {
+    const userLocation = "<%= location %>";
+    const locationApiKey = "<%= apiKey %>";
+
     // DOM Elements
     const locationInput = document.getElementById("location-input");
     const autocompleteList = document.getElementById("autocomplete-list");
@@ -417,7 +420,7 @@
     let autoPlayInterval = null;
 
     // Check for stored location on page load
-    const storedLocation = localStorage.getItem("userLocation");
+    const storedLocation = userLocation || localStorage.getItem("userLocation");
     if (storedLocation) {
       locationInput.value = storedLocation;
       // Auto-fetch weather if there's a stored location
@@ -501,32 +504,55 @@
 
       errorMessage.classList.add("hidden");
 
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          // Simple reverse geocoding
-          const city = coordinateToCity.find(
-            (c) =>
-              Math.abs(c.lat - latitude) < 1 && Math.abs(c.lon - longitude) < 1
-          );
-          const locationValue = city ? city.city : "Accra, Ghana";
-          locationInput.value = locationValue;
+      getLocationInfo(locationApiKey, true)
+        .then((data) => {
+          const locationValue = localStorage.getItem("locationData");
 
-          // Store in localStorage
-          localStorage.setItem("userLocation", locationValue);
+          if (locationValue) {
+            const { country, state, county } = JSON.parse(locationValue);
+            locationInput.value = state;
+            // Store in localStorage
+            localStorage.setItem("userLocation", state);
+          }
 
           resetGeoButton();
           // Auto-fetch data
           fetchButton.click();
-        },
-        (error) => {
+        })
+        .error((error) => {
           showError(
             "Unable to retrieve your location. Please enter it manually."
           );
           resetGeoButton();
           console.error("Geolocation Error:", error);
-        }
-      );
+        });
+
+      // navigator.geolocation.getCurrentPosition(
+      //(position) => {
+      // const { latitude, longitude } = position.coords;
+      // Simple reverse geocoding
+      // const city = coordinateToCity.find(
+      //   (c) =>
+      //    Math.abs(c.lat - latitude) < 1 && Math.abs(c.lon - longitude) < 1
+      // );
+      // const locationValue = city ? city.city : "Accra, Ghana";
+      // locationInput.value = locationValue;
+
+      // Store in localStorage
+      //  localStorage.setItem("userLocation", locationValue);
+
+      //  resetGeoButton();
+      // Auto-fetch data
+      // fetchButton.click();
+      // },
+      // (error) => {
+      //   showError(
+      //    "Unable to retrieve your location. Please enter it manually."
+      //  );
+      //  resetGeoButton();
+      //   console.error("Geolocation Error:", error);
+      // }
+      // );
     });
 
     function resetGeoButton() {

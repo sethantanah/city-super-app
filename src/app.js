@@ -1,8 +1,11 @@
+import dotenv from 'dotenv';
 import express from "express";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import expressLayouts from "express-ejs-layouts";
 import connectToDatabase from "./db/connection.js";
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000; // Middleware
@@ -58,6 +61,11 @@ app.use("/mailing", mailingRoutes);
 import jobAdminRoutes from "./routes/adminJobRoutes.js";
 
 app.use("/admin/jobs", jobAdminRoutes);
+
+
+// Utilities
+import storageRoutes from "./routes/storage.js"
+app.use("/storage", storageRoutes); // Mount the /api/set-storage route
 
 // 404 handler
 app.use((req, res) => {

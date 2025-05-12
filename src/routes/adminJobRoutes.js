@@ -71,6 +71,7 @@ router.get("/", async (req, res) => {
       status,
       pagination,
       activeSection: "jobs",
+      apiKey: process.env.OPENCAGE_API_KEY
     });
   } catch (error) {
     console.error("Error in admin jobs route:", error);
@@ -132,6 +133,7 @@ router.get("/search", async (req, res) => {
       pagination,
       query,
       activeSection: "jobs",
+      apiKey: process.env.OPENCAGE_API_KEY
     });
   } catch (error) {
     console.error("Error in admin jobs route:", error);
@@ -153,6 +155,7 @@ router.get("/new", async (req, res) => {
       categories,
       jobTypes,
       activeSection: "jobs",
+      apiKey: process.env.OPENCAGE_API_KEY
     });
   } catch (error) {
     console.error("Error loading job creation form:", error);
@@ -235,6 +238,7 @@ router.get("/edit/:id", async (req, res) => {
       categories,
       jobTypes,
       activeSection: "jobs",
+      apiKey: process.env.OPENCAGE_API_KEY,
       formatPhoneNumber
     });
   } catch (error) {
@@ -316,6 +320,7 @@ router.get("/delete/:id", async (req, res) => {
       title: `Delete Job: ${job.title} | Admin`,
       job,
       activeSection: "jobs",
+      apiKey: process.env.OPENCAGE_API_KEY
     });
   } catch (error) {
     console.error("Error loading job deletion page:", error);
@@ -418,6 +423,7 @@ router.get("/expired", async (req, res) => {
       title: "Expired Jobs | Admin",
       jobs: expiredJobs,
       activeSection: "jobs",
+      apiKey: process.env.OPENCAGE_API_KEY
     });
   } catch (error) {
     console.error("Error loading expired jobs:", error);
